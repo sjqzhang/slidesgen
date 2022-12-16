@@ -271,10 +271,11 @@ def test():
 @click.option('--vertical', '-v', 'vertical', default=False, help='slides is vertical')
 def gen(md, output, vertical):
     md_content = get_md_content(md)
-    html_content = get_slides_template()
-    target_slides = render_target_slides(md_content, html_content, vertical)
-    with open(output, 'w') as f:
-        f.write(target_slides)
+    slides=render_slides(md_content, vertical)
+    html=slide_template().replace('<!-- slides -->',slides)
+    with open('slides.html','w') as f:
+        f.write(html)
+
 
 
 @click.group()
