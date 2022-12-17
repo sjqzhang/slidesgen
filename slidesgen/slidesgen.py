@@ -169,11 +169,14 @@ def render_slides(md_content, is_vertical=False):
     for slide in slides:
         comment = get_comment(slide)
         options = get_slide_options_from_comment(comment)
+        options=options.strip()
         if options!='':
+            if not options.startswith('.'):
+                style_map['global']=options
             style_map['preview']=options
         if options=='':
             options = style_map['preview']
-        html.append(render_slide(slide, options))
+        html.append(render_slide(slide, style_map['global']+' '+ options))
     if is_vertical:
         return '<section>' + "\n".join(html) + '</section>'
     else:
@@ -273,16 +276,50 @@ def gen(md, output, vertical):
     md_content = get_md_content(md)
     slides=render_slides(md_content, vertical)
     html=slide_template().replace('<!-- slides -->',slides)
-    with open('slides.html','w') as f:
+    with open('../slides.html', 'w') as f:
         f.write(html)
 
+@click.command()
+@click.option('--output', '-o', 'output', default='slides.md', help='slides markdown file')
+def tpl(output):
+    tpls=[]
+    tpl='''# Page1
+
+<!--
+raw HTML omitted 
+background-color=#000000
+data-background-gradient="linear-gradient(to bottom, #17b2c3 ,#283b95 )"
+data-background-video="./assets/video.mp4" data-background-opacity="0.05"
+-->
+### content1
+<!-- .element: class="fragment" data-fragment-index="1" -->
+### content2
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+    '''
+    tpls.append(tpl)
+    tpl='''---
+# Page2
+### content1
+<!-- .element: class="fragment" data-fragment-index="1" -->
+### content2
+<!-- .element: class="fragment" data-fragment-index="2" -->
+'''
+    tpls.append(tpl)
+
+    with open(output,'w') as f:
+        f.write("\n".join(tpls))
+    print("\n".join(tpls))
 
 
 @click.group()
 def menu():
     pass
 
+def main():
+    menu.add_command(gen)
+    menu.add_command(tpl)
+    menu()
 
 if __name__ == '__main__':
-    menu.add_command(gen)
-    menu()
+    main()
