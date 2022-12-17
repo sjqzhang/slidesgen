@@ -181,7 +181,33 @@ def render_slide(section, options):
     return tpl
 
 
-def render_slides(md_content, is_vertical=False):
+# get random rgb hex color
+def get_random_color():
+    import random
+    return '#%02X%02X%02X' % (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
+# gen background color for  radial-gradient
+def gen_radial_background_color():
+    import random
+    colors=[]
+    # colors.append('radial-gradient(#5FA08B,#78EADC)')
+    # colors.append('radial-gradient(#592A6B,#D7B1E2)')
+    # colors.append('radial-gradient(#1F8EAA,#11F356)')
+    # colors.append('radial-gradient(#CF5C3F,#D4B82F)')
+    # colors.append('radial-gradient(#0DC06A,#3EB412)')
+    colors.append('radial-gradient(#283b95,#17b2c3)')
+    color= random.choice(colors)
+    return 'data-background-gradient="%s"'%(color)
+
+
+def render_slides(md_content, is_vertical=False,markdown_file=''):
+    if markdown_file!='':
+        comment = get_comment(md_content)
+        options = get_slide_options_from_comment(comment)
+        return r'''<section data-markdown="%s" %s data-separator="^<!---->" data-separator-vertical="^\n\|\|\|\n""> </section>'''%(markdown_file,options)
+
+
+
     # global style_map
     slides = get_slides(md_content)
     html = []
@@ -195,6 +221,7 @@ def render_slides(md_content, is_vertical=False):
             style_map['preview']=options
         if options=='':
             options = style_map['preview']
+        options=options #+ ' '+ gen_radial_background_color()
         html.append(render_slide(slide, style_map['global']+' '+ options))
     if is_vertical:
         return '<section>' + "\n".join(html) + '</section>'
@@ -290,9 +317,12 @@ def test():
 @click.option('--md', '-i', 'md', default='slides.md', help='slides markdown file')
 @click.option('--output', '-o', 'output', default='slides.html', help='output html file')
 @click.option('--vertical', '-v', 'vertical', default=False, help='slides is vertical')
-def gen(md, output, vertical):
+@click.option('--with-markdown', '-w', 'with_markdown', default=False, help='render with markdown')
+def gen(md, output, vertical,with_markdown):
     md_content = get_md_content(md)
     slides=render_slides(md_content, vertical)
+    if with_markdown:
+        slides=render_slides(md_content,vertical,markdown_file=md)
     html=slide_template().replace('<!-- slides -->',slides)
     html=html.replace('<!--revealjs-->',get_reveal_initialization(md_content))
     with open(output, 'w') as f:
@@ -309,20 +339,21 @@ raw HTML omitted
 background-color=#000000
 data-background-gradient="linear-gradient(to bottom, #17b2c3 ,#283b95 )"
 data-background-video="./assets/video.mp4" data-background-opacity="0.05"
+data-background-video-loop="true" data-background-video-muted="true"
 -->
 ### content1
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<!-- .element: class="fragment" -->
 ### content2
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<!-- .element: class="fragment" -->
 
     '''
     tpls.append(tpl)
     tpl='''---
 # Page2
 ### content1
-<!-- .element: class="fragment" data-fragment-index="1" -->
+<!-- .element: class="fragment" -->
 ### content2
-<!-- .element: class="fragment" data-fragment-index="2" -->
+<!-- .element: class="fragment" -->
 '''
     tpls.append(tpl)
 
