@@ -1,3 +1,13 @@
+<!--revealjs
+    Reveal.initialize({
+        controls: true,
+        progress: false,
+        history: true,
+        center: true,
+        autoPlayMedia: true,
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX]
+    });
+-->
 # Page1
 
 <!--
