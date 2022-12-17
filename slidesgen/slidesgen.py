@@ -276,7 +276,7 @@ def gen(md, output, vertical):
     md_content = get_md_content(md)
     slides=render_slides(md_content, vertical)
     html=slide_template().replace('<!-- slides -->',slides)
-    with open('../slides.html', 'w') as f:
+    with open(output, 'w') as f:
         f.write(html)
 
 @click.command()
