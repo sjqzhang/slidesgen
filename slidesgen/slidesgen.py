@@ -350,9 +350,9 @@ def test():
 
 global_option = '''
 data-background-gradient="linear-gradient(to bottom, #17b2c3 ,#283b95 )"
-data-background-video="./assets/video.mp4" data-background-opacity="0.05"
+data-background-video="https://sjqzhang.github.io/slidesgen/example/line-connect.mp4" data-background-opacity="0.1"
 data-background-video-loop="true" data-background-video-muted="true"
-data-background-image="https://i1.sinaimg.cn/dy/deco/2013/0329/logo/LOGO_1x.png"
+data-background-image=""
 '''
 
 
