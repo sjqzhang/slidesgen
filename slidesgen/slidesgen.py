@@ -4,7 +4,7 @@ import re
 
 import click
 
-pattern_slides = re.compile(r'\n---\n')
+pattern_slides = re.compile(r'\n---\n|<!---->')
 
 pattern_comments = re.compile(r'<!--[\s\S]+?-->', re.MULTILINE)
 pattern_scripts_src = re.compile(r'<script src="(.+?)"></script>', re.MULTILINE)
@@ -309,16 +309,21 @@ def test():
     # open('csss.css', 'w').write(csss)
 
 
-# tpl=open('slides.html', 'r').read()
-# tpl=compress(tpl)
-# open('tpl.html', 'w').write(tpl)
+global_option='''
+data-background-gradient="linear-gradient(to bottom, #17b2c3 ,#283b95 )"
+data-background-video="./assets/video.mp4" data-background-opacity="0.05"
+data-background-video-loop="true" data-background-video-muted="true"
+data-background-image="https://i1.sinaimg.cn/dy/deco/2013/0329/logo/LOGO_1x.png"
+'''
 
 @click.command()
-@click.option('--md', '-i', 'md', default='slides.md', help='slides markdown file')
-@click.option('--output', '-o', 'output', default='slides.html', help='output html file')
+@click.option('--md', '-i', 'md',  show_default=True,default='slides.md', help='slides markdown file')
+@click.option('--output', '-o', 'output', show_default=True, default='slides.html', help='output html file')
 @click.option('--vertical', '-v', 'vertical', default=False, help='slides is vertical')
 @click.option('--with-markdown', '-w', 'with_markdown', default=False, help='render with markdown')
-def gen(md, output, vertical,with_markdown):
+@click.option('--global', '-g', 'global_option', show_default=True,  default=global_option, help='each slide option')
+def gen(md, output, vertical,with_markdown,global_option):
+    style_map['global']=global_option
     md_content = get_md_content(md)
     slides=render_slides(md_content, vertical)
     if with_markdown:
@@ -329,17 +334,32 @@ def gen(md, output, vertical,with_markdown):
         f.write(html)
 
 @click.command()
-@click.option('--output', '-o', 'output', default='slides.md', help='slides markdown file')
+@click.option('--output', '-o', 'output', default='', help='slides markdown file')
 def tpl(output):
     tpls=[]
-    tpl='''# Page1
+    tpl='''<!--revealjs
+     Reveal.initialize({
+  parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg', 
+  parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
 
+
+  parallaxBackgroundHorizontal: 200,
+  parallaxBackgroundVertical: 50,
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX]
+    });-->
+# Page1
 <!--
 raw HTML omitted 
 background-color=#000000
 data-background-gradient="linear-gradient(to bottom, #17b2c3 ,#283b95 )"
 data-background-video="./assets/video.mp4" data-background-opacity="0.05"
 data-background-video-loop="true" data-background-video-muted="true"
+
 -->
 ### content1
 <!-- .element: class="fragment" -->
@@ -348,17 +368,22 @@ data-background-video-loop="true" data-background-video-muted="true"
 
     '''
     tpls.append(tpl)
-    tpl='''---
+    tpl='''<!---->
 # Page2
-### content1
-<!-- .element: class="fragment" -->
-### content2
-<!-- .element: class="fragment" -->
+### table 
+| 1 | 2 | 3 |
+|---|---|---|
+| 4 | 5 | 6 |
+| 7 | 8 | 9 |
+
+<!---->
+
+<iframe src="https://www.bilibili.com/video/BV1iE411H74W?t=29.6" width="100%" height="500px" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
 '''
     tpls.append(tpl)
-
-    with open(output,'w') as f:
-        f.write("\n".join(tpls))
+    if output!='':
+        with open(output,'w') as f:
+            f.write("\n".join(tpls))
     print("\n".join(tpls))
 
 
