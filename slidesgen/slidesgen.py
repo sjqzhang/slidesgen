@@ -413,25 +413,56 @@ def tpl(output):
 
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX,RevealChalkboard,RevealChart]
     });-->
-# Page1
-<!--
-raw HTML omitted 
-background-color=#000000
-data-background-gradient="linear-gradient(to bottom, #17b2c3 ,#283b95 )"
-data-background-video="./assets/video.mp4" data-background-opacity="0.05"
-data-background-video-loop="true" data-background-video-muted="true"
 
+
+
+```
+<section>
+			
+	<div style="height:480px">
+				<canvas data-chart="line" >
+My first dataset,  65, 59, 80, 81, 56, 55, 40
+<!-- This is a comment -->
+My second dataset, 28, 48, 40, 19, 86, 27, 90
+<!-- 
+{ 
+"data" : {
+	"labels" : ["Enero", "Febrero", "Marzo", "Avril", "Mayo", "Junio", "Julio"],
+	"datasets" : [{ "borderColor": "#0f0", "borderDash": ["5","10"] }, { "borderColor": "#0ff" } ]
+	}
+}
 -->
+				</canvas>
+	</div>
+</section>
+```            
+
+<!------>
+
+# Page1
+
+[baidu](https://github.com/)
+![image](https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg)
 ### content1
 <!-- .element: class="fragment" -->
 ### content2
 <!-- .element: class="fragment" -->
 
-    '''
-    tpls.append(tpl)
-    tpl = '''<!---->
+
+<!---->
 # Page2
-### table 
+<!-- .slide: data-background-gradient="linear-gradient(to bottom, #ccc ,#09a )" data-background-video="./line-connect.mp4" data-background-video-loop="true" data-background-opacity="0.07" -->
+
+<!---->
+# Page2
+
+
+
+
+
+### table
+<!-- .slide: data-background="#ccc" data-background-gradient="linear-gradient(to bottom, #ccc ,#09a )"
+ -->
 | 1 | 2 | 3 |
 |---|---|---|
 | 4 | 5 | 6 |
@@ -440,6 +471,12 @@ data-background-video-loop="true" data-background-video-muted="true"
 <!---->
 
 <iframe src="https://www.bilibili.com/video/BV1iE411H74W?t=29.6" width="100%" height="500px" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+
+
+
+
+
+
 '''
     tpls.append(tpl)
     if output != '':
