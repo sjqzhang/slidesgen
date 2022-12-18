@@ -4,7 +4,9 @@ import re
 
 import click
 
-pattern_slides = re.compile(r'\n---\n|<!---->')
+pattern_slides = re.compile(r'\n---\n|<![\-]{4,}>')
+
+pattern_section_raw= re.compile(r"```section([\s\S]+?)```|```([\s\S]+?)```", re.MULTILINE)
 
 pattern_comments = re.compile(r'<!--[\s\S]+?-->', re.MULTILINE)
 pattern_scripts_src = re.compile(r'<script src="(.+?)"></script>', re.MULTILINE)
@@ -197,6 +199,15 @@ def get_ccs_href(html_content):
 
 
 def render_slide(section, options):
+    section=section.strip()
+    if pattern_section_raw.match(section):
+        match= pattern_section_raw.findall(section)
+        if len(match[0][0])>len(match[0][1]):
+            return match[0][0]
+        else:
+            return match[0][1]
+    
+
     tpl = '''
     <section data-markdown {options}>
         <script type="text/template">
