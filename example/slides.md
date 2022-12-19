@@ -4,11 +4,12 @@
         parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
        //autoSlide: 5000,
        // loop: true,
-
+        controlsTutorial: true,
+        controlsLayout: 'edges',
         parallaxBackgroundHorizontal: 200,
         parallaxBackgroundVertical: 50,
         controls: true,
-        progress: true,
+        //progress: true,
         history: true,
         center: true,
         chalkboard: { // font-awesome.min.css must be available
@@ -36,13 +37,10 @@
     });
     
 
-    setInterval(function(){
-          Reveal.next();
-    },1000)
     -->
 
 # page1
-<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_19.gif"  data-background-opacity="0.05" -->
+<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_19.gif"  data-background-opacity="0.07" -->
 ### content1
 <!-- .element: class="fragment" -->
 ### content2
@@ -52,7 +50,7 @@
 <!---->
 
 # page2
-<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_10.gif"  data-background-opacity="0.05" -->
+<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_10.gif"  data-background-opacity="0.07" -->
 ### content1
 <!-- .element: class="fragment" -->
 ### content2
@@ -61,7 +59,7 @@
 <!---->
 
 # page3
-<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_11.gif"  data-background-opacity="0.05" -->
+<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_11.gif"  data-background-opacity="0.07" -->
 ### content1
 <!-- .element: class="fragment" -->
 ### content2
@@ -70,7 +68,7 @@
 <!---->
 
 # page4
-<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_12.gif"  data-background-opacity="0.05" -->
+<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_12.gif"  data-background-opacity="0.07" -->
 ### content1
 <!-- .element: class="fragment" -->
 ### content2
@@ -79,7 +77,7 @@
 <!---->
 
 # page5
-<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_13.gif"  data-background-opacity="0.05" -->
+<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_13.gif"  data-background-opacity="0.07" -->
 ### content1
 <!-- .element: class="fragment" -->
 ### content2
@@ -88,7 +86,7 @@
 <!---->
 
 # page6
-<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_14.gif"  data-background-opacity="0.05" -->
+<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_14.gif"  data-background-opacity="0.07" -->
 ### content1
 <!-- .element: class="fragment" -->
 ### content2
@@ -97,15 +95,18 @@
 <!---->
 
 # page7
-<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_15.gif"  data-background-opacity="0.05" -->
+<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_15.gif"  data-background-opacity="0.07" -->
 ### content1
 <!-- .element: class="fragment" -->
 ### content2
 <!-- .element: class="fragment" -->
 <!---->
 # page8
-<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_16.gif"  data-background-opacity="0.05" -->
+<!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_16.gif"  data-background-opacity="0.07" -->
 ### content1
 <!-- .element: class="fragment" -->
 ### content2
 <!-- .element: class="fragment" -->
+
+<!---->
+# End
