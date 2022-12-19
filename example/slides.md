@@ -1,32 +1,5 @@
-
-
-```
-			<section>
-			
-				<div style="height:480px">
-				<canvas data-chart="line" >
-My first dataset,  65, 59, 80, 81, 56, 55, 40
-<!-- This is a comment -->
-My second dataset, 28, 48, 40, 19, 86, 27, 90
-<!-- 
-{ 
-"data" : {
-	"labels" : ["Enero", "Febrero", "Marzo", "Avril", "Mayo", "Junio", "Julio"],
-	"datasets" : [{ "borderColor": "#0f0", "borderDash": ["5","10"] }, { "borderColor": "#0ff" } ]
-	}
-}
--->
-				</canvas>
-				</div>
-			</section>
-```            
-
-<!------>
-
-# Page1
-
-[baidu](https://github.com/)
-![image](https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg)
+# page1
+<!-- .slide: data-background-image="../assets/loop_19.gif"  data-background-opacity="0.05" -->
 ### content1
 <!-- .element: class="fragment" -->
 ### content2
@@ -34,49 +7,62 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 
 
 <!---->
-# Page2
-<!-- .slide: data-background-gradient="linear-gradient(to bottom, #ccc ,#09a )" data-background-video="./line-connect.mp4" data-background-video-loop="true" data-background-opacity="0.07" -->
 
-<!---->
-# Page2
-
-
-
-
-
-### table
-<!-- .slide: data-background="#ccc" data-background-gradient="linear-gradient(to bottom, #ccc ,#09a )"
- -->
-| 1 | 2 | 3 |
-|---|---|---|
-| 4 | 5 | 6 |
-| 7 | 8 | 9 |
+# page2
+<!-- .slide: data-background-image="../assets/loop_10.gif"  data-background-opacity="0.05" -->
+### content1
+<!-- .element: class="fragment" -->
+### content2
+<!-- .element: class="fragment" -->
 
 <!---->
 
-<iframe src="https://www.bilibili.com/video/BV1iE411H74W?t=29.6" width="100%" height="500px" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+# page3
+<!-- .slide: data-background-image="../assets/loop_11.gif"  data-background-opacity="0.05" -->
+### content1
+<!-- .element: class="fragment" -->
+### content2
+<!-- .element: class="fragment" -->
 
+<!---->
 
-<!------>
+# page4
+<!-- .slide: data-background-image="../assets/loop_12.gif"  data-background-opacity="0.05" -->
+### content1
+<!-- .element: class="fragment" -->
+### content2
+<!-- .element: class="fragment" -->
 
-```
-			<section>
-				<h3>Line chart with CSV data and JSON configuration</h3>
-				<div style="height:480px">
-				<canvas data-chart="line" >
-My first dataset,  65, 59, 80, 81, 56, 55, 40
-<!-- This is a comment -->
-My second dataset, 28, 48, 40, 19, 86, 27, 90
-<!-- 
-{ 
-"data" : {
-	"labels" : ["Enero", "Febrero", "Marzo", "Avril", "Mayo", "Junio", "Julio"],
-	"datasets" : [{ "borderColor": "#0f0", "borderDash": ["5","10"] }, { "borderColor": "#0ff" } ]
-	}
-}
--->
-				</canvas>
-				</div>
-			</section>
-```            
+<!---->
 
+# page5
+<!-- .slide: data-background-image="../assets/loop_13.gif"  data-background-opacity="0.05" -->
+### content1
+<!-- .element: class="fragment" -->
+### content2
+<!-- .element: class="fragment" -->
+
+<!---->
+
+# page6
+<!-- .slide: data-background-image="../assets/loop_14.gif"  data-background-opacity="0.05" -->
+### content1
+<!-- .element: class="fragment" -->
+### content2
+<!-- .element: class="fragment" -->
+
+<!---->
+
+# page7
+<!-- .slide: data-background-image="../assets/loop_15.gif"  data-background-opacity="0.05" -->
+### content1
+<!-- .element: class="fragment" -->
+### content2
+<!-- .element: class="fragment" -->
+<!---->
+# page8
+<!-- .slide: data-background-image="../assets/loop_16.gif"  data-background-opacity="0.05" -->
+### content1
+<!-- .element: class="fragment" -->
+### content2
+<!-- .element: class="fragment" -->
