@@ -320,6 +320,7 @@ def render_target_slides(md_content, html_content, is_vertical=False):
 
 
 def get_md_content(file_name):
+    # if is remote file use requests get content
     with open(file_name) as f:
         md_content = f.read()
     return md_content
@@ -357,17 +358,21 @@ data-background-image=""
 
 
 @click.command()
-@click.option('--md', '-i', 'md', show_default=True, default='slides.md', help='slides markdown file')
+@click.option('--input', '-i', 'input_filename', show_default=True, default='slides.md', help='slides markdown file')
 @click.option('--output', '-o', 'output', show_default=True, default='slides.html', help='output html file')
 @click.option('--vertical', '-v', 'vertical', default=False, help='slides is vertical')
 @click.option('--with-markdown', '-w', 'with_markdown', default=False, help='render with markdown')
 @click.option('--global', '-g', 'global_options', show_default=True, default=global_option, help='each slide option')
-def gen(md, output, vertical, with_markdown, global_options):
+def gen(input_filename, output, vertical, with_markdown, global_options):
+    import os
+    if os.path.exists(global_options):
+        with open(global_options) as f:
+            global_options = f.read()
     style_map['global'] = global_options
-    md_content = get_md_content(md)
+    md_content = get_md_content(input_filename)
     if not with_markdown:
-        md=''
-    slides = render_slides(md_content, vertical, markdown_file=md,global_options=global_options)
+        input_filename=''
+    slides = render_slides(md_content, vertical, markdown_file=input_filename,global_options=global_options)
     html = slide_template().replace('<!-- slides -->', slides)
     html = html.replace('<!--revealjs-->', get_reveal_initialization(md_content))
     with open(output, 'w') as f:
