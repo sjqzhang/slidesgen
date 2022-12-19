@@ -37,7 +37,7 @@ def get_reveal_initialization(md_content):
         return initialization[0]
     return '''
     Reveal.initialize({
-    parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg', 
+    //parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg', 
     parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
 
 
@@ -54,6 +54,7 @@ def get_reveal_initialization(md_content):
                 toggleNotesButton: { left: "130px" },
                 colorButtons: 5
             },
+            /*
             chart: {
                 defaults: {
                     color: 'lightgray', // color of labels
@@ -67,7 +68,7 @@ def get_reveal_initialization(md_content):
                 bar: { backgroundColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]},
                 pie: { backgroundColor: [ ["rgba(0,0,0,.8)" , "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"] ]},
             },
-
+            */
             plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX,RevealChalkboard,RevealChart]
         });
     '''
@@ -385,12 +386,13 @@ def tpl(output):
     tpls = []
     tpl = '''<!--revealjs
      Reveal.initialize({
-  parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg', 
-  parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
+        //parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg', 
+        parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
+       //autoSlide: 5000,
+       // loop: true,
 
-
-  parallaxBackgroundHorizontal: 200,
-  parallaxBackgroundVertical: 50,
+        parallaxBackgroundHorizontal: 200,
+        parallaxBackgroundVertical: 50,
         controls: true,
         progress: true,
         history: true,
@@ -417,7 +419,13 @@ def tpl(output):
 	    },
 
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX,RevealChalkboard,RevealChart]
-    });-->
+    });
+    
+
+    setInterval(function(){
+          Reveal.next();
+    },2000)
+    -->
 
 
 
@@ -447,7 +455,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 # Page1
 
 [baidu](https://github.com/)
-![image](https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg)
+
 ### content1
 <!-- .element: class="fragment" -->
 ### content2
