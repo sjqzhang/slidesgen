@@ -113,7 +113,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
     </div>
     
     <div id="right" style="float: right; width: 49%;min-height: 500px;">
-      <iframe id="slides" src="right.html" style="width: 100%;height: 100%;"></iframe>
+      <iframe id="slides" src="right.html" style="width: 100%;height: 100%;border:1px dash gray;"></iframe>
     </div>
   </body>
 
@@ -165,8 +165,8 @@ String.prototype.format = function(args) {
       $("#middle").css("width", "50px");
       // set left div height to window height by css
       $("#left").css("width", ($(window).width()/2-2) + "px");
-      $("#right").css("width", ($(window).width()/2-20) + "px");
-      $("#markdown").css("width", ($(window).width()/2-60) + "px");
+      $("#right").css("width", ($(window).width()/2-18) + "px");
+      $("#markdown").css("width", ($(window).width()/2-68) + "px");
       $("#markdown").css("height", $(window).height() + "px");
       // set textarea height to window height by css
       $("textarea").css("height", $(window).height()-reduceHeight + "px");
@@ -229,6 +229,7 @@ String.prototype.format = function(args) {
         if($('#markdown:visible').length>0) {
           init()         
         } else {
+          //$('#markdown').hidden()
           $("#left").css("width",  "60px"); 
           $("#right").css("width", ($(window).width()-85) + "px"); 
         }
