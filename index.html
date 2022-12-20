@@ -148,6 +148,18 @@ String.prototype.format = function(args) {
 
       }
 
+      $('#middle').dblclick(function(){
+
+        $('#markdown').toggle()
+        if($('#markdown:visible').length>0) {
+          init()         
+        } else {
+          $("#left").css("width",  "60px"); 
+          $("#right").css("width", ($(window).width()-85) + "px"); 
+        }
+
+      })
+
       $('#middle').click(function(){
 
           $('#slides').attr('src','right.html')
