@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>SlidesGen</title>
-  </head>
-  <body>
-    <div id="left" style="float: left; width: 45%;min-height: 500px;">
-      <textarea id="markdown" style="width: 100%;height: 100%;float:left;">
+
+<head>
+  <meta charset="utf-8" />
+  <title>SlidesGen</title>
+</head>
+
+<body>
+  <div id="left" style="float: left; width: 45%;min-height: 500px;">
+    <textarea id="markdown" style="width: 100%;height: 100%;float:left;">
 ```
 <section>
 <!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_03.gif"  data-background-opacity="0.07" -->
@@ -109,88 +111,106 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 <!---->
 # End
       </textarea>
-      <button id="middle" style="float:right;width: 50px;overfloat:hidden;" value="xxx">View</button>
-    </div>
-    
-    <div id="right" style="float: right; width: 49%;min-height: 500px;">
-      <iframe id="slides" src="right.html" style="width: 100%;height: 100%;border:1px dash gray;"></iframe>
-    </div>
-  </body>
+    <button id="middle" style="float:right;width: 50px;overfloat:hidden;" value="xxx">View</button>
+    <button id="btnSave" style="float:right;width: 50px;overfloat:hidden;" value="xxx">Save</button>
 
-  <!-- import jquery from cdn-->
+  </div>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <div id="right" style="float: right; width: 49%;min-height: 500px;">
+    <iframe id="slides" src="right.html" style="width: 100%;height: 100%;border:1px dash gray;"></iframe>
+  </div>
+</body>
 
-  <script>
-    // when document is ready
+<!-- import jquery from cdn-->
 
-    // 字符串格式化方法
-String.prototype.format = function(args) {
-	var result = this;
-	if (arguments.length > 0) {
-		if (arguments.length == 1 && typeof (args) == "object") {
-			for (var key in args) {
-				if(args[key]!=undefined){
-					var reg = new RegExp("({" + key + "})", "g");
-					result = result.replace(reg, args[key]);
-				}
-			}
-		}
-		else {
-			for (var i = 0; i < arguments.length; i++) {
-				if (arguments[i] != undefined) {
-					var reg= new RegExp("({)" + i + "(})", "g");
-					result = result.replace(reg, arguments[i]);
-				}
-			}
-		}
-	}
-	return result;
-};
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
-    
-    $(document).ready(function () {
+<script>
+
+  function fakeClick(obj) {
+    var ev = document.createEvent("MouseEvents");
+    ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    obj.dispatchEvent(ev);
+  }
+
+  function exportRaw(name, data) {
+    var urlObject = window.URL || window.webkitURL || window;
+    var export_blob = new Blob([data]);
+    var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+    save_link.href = urlObject.createObjectURL(export_blob);
+    save_link.download = name;
+    fakeClick(save_link);
+  }
+
+  // when document is ready
+
+  // 字符串格式化方法
+  String.prototype.format = function (args) {
+    var result = this;
+    if (arguments.length > 0) {
+      if (arguments.length == 1 && typeof (args) == "object") {
+        for (var key in args) {
+          if (args[key] != undefined) {
+            var reg = new RegExp("({" + key + "})", "g");
+            result = result.replace(reg, args[key]);
+          }
+        }
+      }
+      else {
+        for (var i = 0; i < arguments.length; i++) {
+          if (arguments[i] != undefined) {
+            var reg = new RegExp("({)" + i + "(})", "g");
+            result = result.replace(reg, arguments[i]);
+          }
+        }
+      }
+    }
+    return result;
+  };
 
 
-      
+  $(document).ready(function () {
 
 
 
-// set left div height to window height by css
 
-      function init() {
 
-      var reduceHeight=10;
-      $("#middle").css("height", $(window).height()-reduceHeight + "px");
+
+    // set left div height to window height by css
+
+    function init() {
+
+      var reduceHeight = 10;
+      $("#middle").css("height", $(window).height() - reduceHeight - 50 + "px");
       $("#middle").css("width", "50px");
       // set left div height to window height by css
-      $("#left").css("width", ($(window).width()/2-2) + "px");
-      $("#right").css("width", ($(window).width()/2-18) + "px");
-      $("#markdown").css("width", ($(window).width()/2-68) + "px");
+      $("#left").css("width", ($(window).width() / 2 - 2) + "px");
+      $("#right").css("width", ($(window).width() / 2 - 18) + "px");
+      $("#markdown").css("width", ($(window).width() / 2 - 68) + "px");
       $("#markdown").css("height", $(window).height() + "px");
       // set textarea height to window height by css
-      $("textarea").css("height", $(window).height()-reduceHeight + "px");
+      $("textarea").css("height", $(window).height() - reduceHeight + "px");
       // set right div height to window height by css
-      $("#right").css("height", $(window).height()-reduceHeight + "px");
+      $("#right").css("height", $(window).height() - reduceHeight + "px");
       // set iframe height to window height by css
-      $("iframe").css("height", $(window).height()-reduceHeight + "px");
+      $("iframe").css("height", $(window).height() - reduceHeight + "px");
 
       //$('#middle').css('padding-top',$(window).height()/2+'px')
-      
 
-      }
+
+    }
+    init()
+
+    $(window).resize(function () {
       init()
-
-      $(window).resize(function(){
-        init()
-      })
+    })
 
 
-      // translate markdown to reveal.js slides
+    // translate markdown to reveal.js slides
 
-      function tran(md) {
+    function tran(md) {
 
-       var tpl=`
+      var tpl = `
        <section data-markdown {options}>
         <script type="text/template">
            {section}
@@ -199,74 +219,83 @@ String.prototype.format = function(args) {
        `
 
 
-       //md=md.replace(/^\s*/img,'')
-        var ss=[]
-        var slides=md.split(/\<\!----\>/ig)
-        for(var i=0;i<slides.length;i++) {
-            var s=$.trim(slides[i])
+      //md=md.replace(/^\s*/img,'')
+      var ss = []
+      var slides = md.split(/\<\!----\>/ig)
+      for (var i = 0; i < slides.length; i++) {
+        var s = $.trim(slides[i])
 
-            
-            var m=s.match(/```section([\s\S]+?)```|```([\s\S]+?)```/ig)
-            if (m) {
-                
-              ss.push(m[0].replace(/^```|^````section|```$/ig,''))
 
-            } else {
-              ss.push(tpl.format({section:slides[i]}))
-            }
+        var m = s.match(/```section([\s\S]+?)```|```([\s\S]+?)```/ig)
+        if (m) {
+
+          ss.push(m[0].replace(/^```|^````section|```$/ig, ''))
+
+        } else {
+          ss.push(tpl.format({ section: slides[i] }))
         }
-
-
-        return ss.join("\n")
-
-
-
       }
 
-      $('#middle').dblclick(function(){
 
-        $('#markdown').toggle()
-        if($('#markdown:visible').length>0) {
-          init()         
-        } else {
-          //$('#markdown').hidden()
-          $("#left").css("width",  "60px"); 
-          $("#right").css("width", ($(window).width()-85) + "px"); 
+      return ss.join("\n")
+
+
+
+    }
+
+    $('#middle').dblclick(function () {
+
+      $('#markdown').toggle()
+      if ($('#markdown:visible').length > 0) {
+        init()
+      } else {
+        //$('#markdown').hidden()
+        $("#left").css("width", "60px");
+        $("#right").css("width", ($(window).width() - 85) + "px");
+      }
+
+    })
+
+    $('#middle').click(function () {
+
+      $('#slides').attr('src', 'right.html')
+
+      var t = setTimeout(function () {
+        if ($("#slides").contents().find('.slides').length > 0) {
+
+          var val = tran($('textarea').val())
+          $("#slides").contents().find('.slides').html(val)
+          $("#slides").contents().find('#btnClick').trigger('click')
+          clearTimeout(t)
         }
-
-      })
-
-      $('#middle').click(function(){
-
-          $('#slides').attr('src','right.html')
-
-         var t= setTimeout(function(){
-           if($("#slides").contents().find('.slides').length>0) {
-
-            var val=tran($('textarea').val())
-            $("#slides").contents().find('.slides').html(val)
-            $("#slides").contents().find('#btnClick').trigger('click')
-            clearTimeout(t)
-           }
-          },200)
-
-    
+      }, 200)
 
 
-      })
 
 
-      //get textarea value set to iframe 
+    })
 
-      // $('textarea').change(function(){
-      // })
+    $('#btnSave').click(function(){
+      var src=document.getElementById("slides").contentWindow.document.documentElement.outerHTML;
+      src=src.replace('//init();','init();')
+      src=src.replace('id="btnClick"','')
+      src=src.replace('&lt;!--title--&gt;','My PPT')
+      exportRaw('ppt.html',src)
+    })
 
 
-  
+    //get textarea value set to iframe 
 
-       
-    });
+    // $('textarea').change(function(){
+    // })
 
 
-  </script>
+
+
+
+  });
+
+
+</script>
+
 </html>
