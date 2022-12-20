@@ -18,6 +18,12 @@ style_map = {'global': '', 'preview': ''}
 # base64 encode and zip
 import base64
 import zlib
+import sys
+
+# judge is python2 or python3
+PY2= sys.version_info[0] == 2
+PY3= sys.version_info[0] == 3
+
 
 
 def slide_template():
@@ -380,7 +386,10 @@ def gen(input_filename, output, vertical, with_markdown, global_options,title):
     html = html.replace('<!--title-->', title)
     html = html.replace('<!--revealjs-->', get_reveal_initialization(md_content))
     with open(output, 'w') as f:
-        f.write(html)
+        if PY2:
+            f.write(html.encode('utf8'))
+        else:
+            f.write(html)
 
 
 @click.command()
