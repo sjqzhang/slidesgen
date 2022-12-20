@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>SlidesGen</title>
+  </head>
+  <body>
+    <div id="left" style="float: left; width: 45%;min-height: 500px;">
+      <textarea id="markdown" style="width: 100%;height: 100%;float:left;"></textarea>
+      <div id="middle" style="float:right;width: 50px;border:1px solid red;">=</div>
+    </div>
+    
+    <div id="right" style="float: right; width: 49%;min-height: 500px;">
+      <iframe id="slides" src="right.html" style="width: 100%;height: 100%;"></iframe>
+    </div>
+  </body>
+
+  <!-- import jquery from cdn-->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script>
+    // when document is ready
+
+    
+    $(document).ready(function () {
+
+      $.extend($.expr[':'], {
+    contents: function(elem, i, attr){
+      return $(elem).contents().find( attr[3] );
+    }
+});  
+
+
+// set left div height to window height by css
+$("#middle").css("height", $(window).height() + "px");
+$("#middle").css("width", "50px");
+      // set left div height to window height by css
+      $("#left").css("width", ($(window).width()/2-2) + "px");
+      $("#right").css("width", ($(window).width()/2-20) + "px");
+      $("#markdown").css("width", ($(window).width()/2-60) + "px");
+      $("#markdown").css("height", $(window).height() + "px");
+      // set textarea height to window height by css
+      $("textarea").css("height", $(window).height() + "px");
+      // set right div height to window height by css
+      $("#right").css("height", $(window).height() + "px");
+      // set iframe height to window height by css
+      $("iframe").css("height", $(window).height() + "px");
+
+      $('#middle').click(function(){
+
+          $('#slides').attr('src','right.html')
+
+         var t= setTimeout(function(){
+           if($("#slides").contents().find('.slides').length>0) {
+            $("#slides").contents().find('.slides').html($('textarea').val())
+            $("#slides").contents().find('#btnClick').trigger('click')
+            clearTimeout(t)
+           }
+          },200)
+
+    
+
+
+      })
+
+
+      //get textarea value set to iframe 
+
+      // $('textarea').change(function(){
+      // })
+
+
+  
+
+       
+    });
+
+
+  </script>
+</html>
