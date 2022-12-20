@@ -6,8 +6,35 @@
   </head>
   <body>
     <div id="left" style="float: left; width: 45%;min-height: 500px;">
-      <textarea id="markdown" style="width: 100%;height: 100%;float:left;"></textarea>
-      <div id="middle" style="float:right;width: 50px;border:1px solid red;">=</div>
+      <textarea id="markdown" style="width: 100%;height: 100%;float:left;">
+```
+<section>
+
+  <div style="height:480px">
+        <canvas data-chart="line" >
+My first dataset,  65, 59, 80, 81, 56, 55, 40
+<!-- This is a comment -->
+My second dataset, 28, 48, 40, 19, 86, 27, 90
+<!-- 
+{ 
+"data" : {
+  "labels" : ["Enero", "Febrero", "Marzo", "Avril", "Mayo", "Junio", "Julio"],
+  "datasets" : [{ "borderColor": "#0f0", "borderDash": ["5","10"] }, { "borderColor": "#0ff" } ]
+  }
+}
+-->
+
+        </canvas>
+  </div>
+</section>
+```
+<!---->
+## table 
+|1|2|3|
+|--|--|--|
+|4|5|6|
+      </textarea>
+      <button id="middle" style="float:right;width: 50px;overfloat:hidden;" value="xxx">View</button>
     </div>
     
     <div id="right" style="float: right; width: 49%;min-height: 500px;">
@@ -22,30 +49,104 @@
   <script>
     // when document is ready
 
+    // 字符串格式化方法
+String.prototype.format = function(args) {
+	var result = this;
+	if (arguments.length > 0) {
+		if (arguments.length == 1 && typeof (args) == "object") {
+			for (var key in args) {
+				if(args[key]!=undefined){
+					var reg = new RegExp("({" + key + "})", "g");
+					result = result.replace(reg, args[key]);
+				}
+			}
+		}
+		else {
+			for (var i = 0; i < arguments.length; i++) {
+				if (arguments[i] != undefined) {
+					var reg= new RegExp("({)" + i + "(})", "g");
+					result = result.replace(reg, arguments[i]);
+				}
+			}
+		}
+	}
+	return result;
+};
+
     
     $(document).ready(function () {
 
-      $.extend($.expr[':'], {
-    contents: function(elem, i, attr){
-      return $(elem).contents().find( attr[3] );
-    }
-});  
+
+      
+
 
 
 // set left div height to window height by css
-$("#middle").css("height", $(window).height() + "px");
-$("#middle").css("width", "50px");
+
+      function init() {
+
+      var reduceHeight=10;
+      $("#middle").css("height", $(window).height()-reduceHeight + "px");
+      $("#middle").css("width", "50px");
       // set left div height to window height by css
       $("#left").css("width", ($(window).width()/2-2) + "px");
       $("#right").css("width", ($(window).width()/2-20) + "px");
       $("#markdown").css("width", ($(window).width()/2-60) + "px");
       $("#markdown").css("height", $(window).height() + "px");
       // set textarea height to window height by css
-      $("textarea").css("height", $(window).height() + "px");
+      $("textarea").css("height", $(window).height()-reduceHeight + "px");
       // set right div height to window height by css
-      $("#right").css("height", $(window).height() + "px");
+      $("#right").css("height", $(window).height()-reduceHeight + "px");
       // set iframe height to window height by css
-      $("iframe").css("height", $(window).height() + "px");
+      $("iframe").css("height", $(window).height()-reduceHeight + "px");
+
+      //$('#middle').css('padding-top',$(window).height()/2+'px')
+      
+
+      }
+      init()
+
+      $(window).resize(function(){
+        init()
+      })
+
+
+      // translate markdown to reveal.js slides
+
+      function tran(md) {
+
+       var tpl=`
+       <section data-markdown {options}>
+        <script type="text/template">
+           {section}
+        <\/script>
+    </section>
+       `
+
+
+       //md=md.replace(/^\s*/img,'')
+        var ss=[]
+        var slides=md.split(/\<\!----\>/ig)
+        for(var i=0;i<slides.length;i++) {
+            var s=$.trim(slides[i])
+
+            
+            var m=s.match(/```section([\s\S]+?)```|```([\s\S]+?)```/ig)
+            if (m) {
+                
+              ss.push(m[0].replace(/^```|^````section|```$/ig,''))
+
+            } else {
+              ss.push(tpl.format({section:slides[i]}))
+            }
+        }
+
+
+        return ss.join("\n")
+
+
+
+      }
 
       $('#middle').click(function(){
 
@@ -53,7 +154,9 @@ $("#middle").css("width", "50px");
 
          var t= setTimeout(function(){
            if($("#slides").contents().find('.slides').length>0) {
-            $("#slides").contents().find('.slides').html($('textarea').val())
+
+            var val=tran($('textarea').val())
+            $("#slides").contents().find('.slides').html(val)
             $("#slides").contents().find('#btnClick').trigger('click')
             clearTimeout(t)
            }
