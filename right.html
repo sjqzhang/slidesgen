@@ -505,7 +505,7 @@ div.boardhandle > ul > li {
 
   <input type="hidden" id="btnClick"> 
 
-    <div class="slides">
+    <div class="slides" style="transform:translate(0px,0px);">
         
        
      <!-- slides -->
@@ -668,7 +668,12 @@ window.RevealChart=window.RevealChart||{id:"RevealChart",init:function(deck){ini
 
   })
 
-  //setInterval(init,3000)
+
+  setInterval(function(){
+      if ($('.print-pdf').length>0) {
+        $('.slides').css('transform','translate(0px, 0px)')
+      }
+  },500)
 
 </script>
 
