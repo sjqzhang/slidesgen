@@ -235,13 +235,13 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
         var s = $.trim(slides[i])
 
 
-        var m = s.match(/```section([\s\S]+?)```|```([\s\S]+?)```/ig)
-        if (m) {
 
-          ss.push(m[0].replace(/^```|^````section|```$/ig, ''))
+        var m = s.match(/```[\r\n]*\<section\>([\s\S]+?)<\/section\>[\r\n]*```/ig)
+        if (m) {
+            ss.push(m[0].replace(/^```|```$/ig,''))
 
         } else {
-          ss.push(tpl.format({ section: slides[i] }))
+          ss.push(tpl.format({ section: s }))
         }
       }
 
