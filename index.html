@@ -11,23 +11,23 @@
     <textarea id="markdown" style="width: 100%;height: 100%;float:left;">
 # code
 block 1
-<!-- .element: class="fragment"  -->
+<!-- .element: class="fragment" data-autoslide="1000" -->
 ```js [1-2|3|4]
     let a = 1;
     let b = 2;
     let c = x => 1 + 2 + x;
     c(3);
 ```
-<!-- .element: class="fragment"  -->
+<!-- .element: class="fragment" data-autoslide="1000" -->
 block  2
-<!-- .element: class="fragment"  -->
+<!-- .element: class="fragment" data-autoslide="1000" -->
 ```js [1-2|3|4]
     let a = 1;
     let b = 2;
     let c = x => 1 + 2 + x;
     c(3);
 ```
-<!-- .element: class="fragment"  -->
+<!-- .element: class="fragment" data-autoslide="1000" -->
 
 <!---->
 ```
@@ -256,9 +256,10 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
       for (var i = 0; i < slides.length; i++) {
         var s = $.trim(slides[i])
 
+          // debugger
 
 
-        var m = s.match(/```[\r\n]*\<section\>([\s\S]+?)<\/section\>[\r\n]*```/ig)
+        var m = s.match(/```[\r\n]*\<section[^>]*?\>([\s\S]+?)<\/section\>[\r\n]*```/ig)
         if (m) {
             ss.push(m[0].replace(/^```|```$/ig,''))
 
