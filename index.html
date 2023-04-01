@@ -258,10 +258,11 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
       for (var i = 0; i < slides.length; i++) {
         var s = $.trim(slides[i])
 
-          // get image url  from slide markdown
+
           var options =''
-          var pattern_images=/!\[.*?\]\((.*?)\)/i
-            var img = s.match(pattern_images)
+          // get image url  from slide markdown
+          var pattern_images= /!\[.*?\]\((.*?)\)/img
+            var img = pattern_images.exec(s)
             if (img) {
                 //replace image url to data-background-image
                 options = 'data-background-image="' + img[1] + '" data-background-opacity="0.2"'

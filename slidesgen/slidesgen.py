@@ -3,6 +3,9 @@
 import re
 
 import click
+import requests
+import base64
+
 
 pattern_slides = re.compile(r'^[\-]{3,}\n|<![\-]{4,}>', re.MULTILINE)
 
@@ -245,7 +248,7 @@ def gen_radial_background_color():
     return 'data-background-gradient="%s"' % (color)
 
 
-def render_slides(md_content, is_vertical=False, markdown_file='', global_options=''):
+def render_slides(md_content, is_vertical=False, markdown_file='', global_options='',transparency='0.2'):
     if markdown_file != '':
         if global_options == '':
             comment = get_comment(md_content)
@@ -264,7 +267,15 @@ def render_slides(md_content, is_vertical=False, markdown_file='', global_option
         options = options.strip()
 
         if images:
-            options=options+' data-background-image="'+images[0]+'"'+ ' data-background-opacity="0.2" '
+
+            try:
+                rsp=requests.get(images[0])
+                img64=base64.b64encode( rsp.content)
+                options=options+' data-background-image="data:image/png;base64,'+img64.decode()+'"'+ ' data-background-opacity="'+transparency+'" '
+
+            except Exception as  er:
+                print(er)
+
         # if options!='':
         #     if not options.startswith('.'):
         #         style_map['global']=options
@@ -380,7 +391,8 @@ data-background-video-loop="true" data-background-video-muted="true"
 @click.option('--with-markdown', '-w', 'with_markdown', default=False, help='render with markdown')
 @click.option('--global', '-g', 'global_options', show_default=True, default=global_option, help='each slide option')
 @click.option('--title', '-t', 'title', show_default=True, default='', help='the title of slides')
-def gen(input_filename, output, vertical, with_markdown, global_options, title):
+@click.option('--transparency', '-t', 'transparency', show_default=True, default='0.1', help='the transparency of slides')
+def gen(input_filename, output, vertical, with_markdown, global_options, title, transparency):
     import os
     if os.path.exists(global_options):
         with open(global_options) as f:
@@ -389,7 +401,7 @@ def gen(input_filename, output, vertical, with_markdown, global_options, title):
     md_content = get_md_content(input_filename)
     if not with_markdown:
         input_filename = ''
-    slides = render_slides(md_content, vertical, markdown_file=input_filename, global_options=global_options)
+    slides = render_slides(md_content, vertical, markdown_file=input_filename, global_options=global_options,transparency=transparency)
     html = slide_template().replace('<!-- slides -->', slides)
     html = html.replace('<!--title-->', title)
     html = html.replace('<!--revealjs-->', get_reveal_initialization(md_content))
