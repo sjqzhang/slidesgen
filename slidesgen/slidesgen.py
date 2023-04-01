@@ -4,9 +4,11 @@ import re
 
 import click
 
-pattern_slides = re.compile(r'\n---\n|<![\-]{4,}>')
+pattern_slides = re.compile(r'^[\-]{3,}\n|<![\-]{4,}>', re.MULTILINE)
 
-pattern_section_raw= re.compile(r"```section([\s\S]+?)```|```([\s\S]+?)```", re.MULTILINE)
+pattern_section_raw = re.compile(r"```section([\s\S]+?)```|```([\s\S]+?)```", re.MULTILINE)
+
+pattern_images = re.compile(r"!\[.*?\]\((.*?)\)", re.MULTILINE)
 
 pattern_comments = re.compile(r'<!--[\s\S]+?-->', re.MULTILINE)
 pattern_scripts_src = re.compile(r'<script src="(.+?)"></script>', re.MULTILINE)
@@ -21,9 +23,8 @@ import zlib
 import sys
 
 # judge is python2 or python3
-PY2= sys.version_info[0] == 2
-PY3= sys.version_info[0] == 3
-
+PY2 = sys.version_info[0] == 2
+PY3 = sys.version_info[0] == 3
 
 
 def slide_template():
@@ -206,14 +207,13 @@ def get_ccs_href(html_content):
 
 
 def render_slide(section, options):
-    section=section.strip()
+    section = section.strip()
     if pattern_section_raw.match(section):
-        match= pattern_section_raw.findall(section)
-        if len(match[0][0])>len(match[0][1]):
+        match = pattern_section_raw.findall(section)
+        if len(match[0][0]) > len(match[0][1]):
             return match[0][0]
         else:
             return match[0][1]
-    
 
     tpl = '''
     <section data-markdown {options}>
@@ -257,9 +257,14 @@ def render_slides(md_content, is_vertical=False, markdown_file='', global_option
     slides = get_slides(md_content)
     html = []
     for slide in slides:
+        images=get_images(slide)
+        slide=pattern_images.sub('',slide)
         comment = get_comment(slide)
         options = get_slide_options_from_comment(comment)
         options = options.strip()
+
+        if images:
+            options=options+' data-background-image="'+images[0]+'"'+ ' data-background-opacity="0.2" '
         # if options!='':
         #     if not options.startswith('.'):
         #         style_map['global']=options
@@ -278,6 +283,11 @@ def get_comment(md_content):
     comments = pattern_comments.findall(md_content)
     if comments:
         return comments[0]
+
+
+def get_images(slide):
+    images = pattern_images.findall(slide)
+    return images
 
 
 def merge_files(file_paths):
@@ -360,7 +370,6 @@ global_option = '''
 data-background-gradient="linear-gradient(to bottom, #17b2c3 ,#283b95 )"
 data-background-video="https://sjqzhang.github.io/slidesgen/example/line-connect.mp4" data-background-opacity="0.1"
 data-background-video-loop="true" data-background-video-muted="true"
-data-background-image=""
 '''
 
 
@@ -371,8 +380,7 @@ data-background-image=""
 @click.option('--with-markdown', '-w', 'with_markdown', default=False, help='render with markdown')
 @click.option('--global', '-g', 'global_options', show_default=True, default=global_option, help='each slide option')
 @click.option('--title', '-t', 'title', show_default=True, default='', help='the title of slides')
-
-def gen(input_filename, output, vertical, with_markdown, global_options,title):
+def gen(input_filename, output, vertical, with_markdown, global_options, title):
     import os
     if os.path.exists(global_options):
         with open(global_options) as f:
@@ -380,8 +388,8 @@ def gen(input_filename, output, vertical, with_markdown, global_options,title):
     style_map['global'] = global_options
     md_content = get_md_content(input_filename)
     if not with_markdown:
-        input_filename=''
-    slides = render_slides(md_content, vertical, markdown_file=input_filename,global_options=global_options)
+        input_filename = ''
+    slides = render_slides(md_content, vertical, markdown_file=input_filename, global_options=global_options)
     html = slide_template().replace('<!-- slides -->', slides)
     html = html.replace('<!--title-->', title)
     html = html.replace('<!--revealjs-->', get_reveal_initialization(md_content))

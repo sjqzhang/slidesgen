@@ -253,9 +253,22 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 
       //md=md.replace(/^\s*/img,'')
       var ss = []
-      var slides = md.split(/\<\!----\>/ig)
+      var slides = md.split(/\<\!----\>|^[\-]{3,}/img)
+        //debugger;
       for (var i = 0; i < slides.length; i++) {
         var s = $.trim(slides[i])
+
+          // get image url  from slide markdown
+          var options =''
+          var pattern_images=/!\[.*?\]\((.*?)\)/i
+            var img = s.match(pattern_images)
+            if (img) {
+                //replace image url to data-background-image
+                options = 'data-background-image="' + img[1] + '" data-background-opacity="0.2"'
+                //remove image from markdown
+                s = s.replace(pattern_images, '')
+            }
+
 
           // debugger
 
@@ -265,7 +278,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
             ss.push(m[0].replace(/^```|```$/ig,''))
 
         } else {
-          ss.push(tpl.format({ section: s }))
+          ss.push(tpl.format({ section: s,options:options }))
         }
       }
 
