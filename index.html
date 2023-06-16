@@ -2894,6 +2894,10 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
     };
 
 
+
+    var IMAGE_MAP = {}
+
+    var SECTIONS=[]
     $(document).ready(function () {
 
 
@@ -2948,8 +2952,6 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
         })
 
 
-        var IMAGE_MAP = {}
-
         function getBase64Image(url) {
             try {
                 var image = new Image();
@@ -2965,6 +2967,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
                     var ext = img.src.substring(img.src.lastIndexOf(".") + 1).toLowerCase();
                     var dataURL = canvas.toDataURL("image/" + ext);
                     IMAGE_MAP[url] = dataURL
+
                 }
             } catch (e) {
                 console.log(e)
@@ -2980,10 +2983,8 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
             var tpl = `
        <section data-markdown {options}>
         <script type="text/template">
-           {section}
-        <\/script>
-    </section>
-       `
+           {section}<\/script>
+    </section>`
 
 
             //md=md.replace(/^\s*/img,'')
@@ -3010,7 +3011,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
                 if (img) {
                     //replace image url to data-background-image
                     getBase64Image(img[1])
-                    debugger;
+
                 }
 
 
@@ -3026,7 +3027,9 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
                 }
             }
 
+            debugger
 
+            SECTIONS=ss
             return ss.join("\n")
 
 
@@ -3063,13 +3066,16 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
         })
 
         $('#btnSave').click(function () {
-            var src = document.getElementById("slides").contentWindow.document.documentElement.outerHTML;
+            var slides=SECTIONS.join("\n")
+            debugger
+            for (var key in IMAGE_MAP) {
+                slides = slides.replace(key, IMAGE_MAP[key])
+            }
+            $('.slides',$(document.getElementById("slides").contentWindow.document)).html(slides)
+            var src=document.getElementById("slides").contentWindow.document.documentElement.outerHTML;
             src = src.replace('//init();', 'init();')
             src = src.replace('id="btnClick"', '')
             src = src.replace('&lt;!--title--&gt;', 'My PPT')
-            for (var key in IMAGE_MAP) {
-                src = src.replace(key, IMAGE_MAP[key])
-            }
             exportRaw('ppt.html', src)
         })
 
