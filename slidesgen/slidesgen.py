@@ -11,7 +11,7 @@ pattern_slides = re.compile(r'^[\-]{3,}\n|<![\-]{4,}>', re.MULTILINE)
 
 pattern_section_raw = re.compile(r"```section([\s\S]+?)```|```([\s\S]+?)```", re.MULTILINE)
 
-pattern_images = re.compile(r"!\[.*?\]\((.*?)\)", re.MULTILINE)
+pattern_images = re.compile(r'!\[.*?\]\((.*?)\)|data-background-image="([^"]+?)"', re.MULTILINE)
 
 pattern_comments = re.compile(r'<!--[\s\S]+?-->', re.MULTILINE)
 pattern_scripts_src = re.compile(r'<script src="(.+?)"></script>', re.MULTILINE)
@@ -269,7 +269,10 @@ def render_slides(md_content, is_vertical=False, markdown_file='', global_option
         if images:
 
             try:
-                rsp=requests.get(images[0])
+                if len(images)>0 and len(images[0])>0 and images[0][0].startswith('http'):
+                    rsp=requests.get(images[0][0])
+                if len(images)>0 and len(images[0])>1  and images[0][1].startswith('http'):
+                    rsp=requests.get(images[0][1])
                 img64=base64.b64encode( rsp.content)
                 options=options+' data-background-image="data:image/png;base64,'+img64.decode()+'"'+ ' data-background-opacity="'+transparency+'" '
 

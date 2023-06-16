@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='slidesgen',
-    version='0.2',
+    version='0.3',
     description='A simple tool to generate slides from markdown files',
     author='sjqzhang',
     packages=find_packages(),
