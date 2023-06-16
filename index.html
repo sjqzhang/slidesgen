@@ -2894,6 +2894,39 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
     };
 
 
+    // 检查浏览器是否支持 localStorage
+    function isLocalStorageSupported() {
+        try {
+            var key = 'testLocalStorageSupport';
+            localStorage.setItem(key, key);
+            localStorage.removeItem(key);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    // 在加载页面时进行判断
+    window.addEventListener('load', function() {
+        if (isLocalStorageSupported()) {
+            // localStorage 支持，执行相应逻辑
+            var textarea = document.getElementById('markdown');
+
+            textarea.addEventListener('input', function() {
+                // 将文本框的内容保存到 localStorage
+                localStorage.setItem('savedText', textarea.value);
+            });
+
+            var savedText = localStorage.getItem('savedText');
+            if (savedText && savedText.length > 0) {
+                textarea.value = savedText;
+            }
+        } else {
+            // localStorage 不支持，执行其他逻辑
+            console.log('localStorage is not supported in this browser.');
+        }
+    });
+
 
     var IMAGE_MAP = {}
 
