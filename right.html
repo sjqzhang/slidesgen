@@ -503,22 +503,22 @@ div.boardhandle > ul > li {
 
 <div class="reveal">
 
-  <input type="hidden" id="btnClick"> 
+  <input type="hidden" id="btnClick">
 
     <div class="slides" style="transform:translate(0px,0px);">
-        
-       
+
+
      <!-- slides -->
 
      <section>
-			
+
       <div style="height:480px">
             <canvas data-chart="line" >
     My first dataset,  65, 59, 80, 81, 56, 55, 40
     <!-- This is a comment -->
     My second dataset, 28, 48, 40, 19, 86, 27, 90
-    <!-- 
-    { 
+    <!--
+    {
     "data" : {
       "labels" : ["Enero", "Febrero", "Marzo", "Avril", "Mayo", "Junio", "Julio"],
       "datasets" : [{ "borderColor": "#0f0", "borderDash": ["5","10"] }, { "borderColor": "#0ff" } ]
@@ -532,14 +532,14 @@ div.boardhandle > ul > li {
 
 
     <section>
-			
+
       <div style="height:480px">
             <canvas data-chart="bar" >
     My first dataset,  65, 59, 80, 81, 56, 55, 40
     <!-- This is a comment -->
     My second dataset, 28, 48, 40, 19, 86, 27, 90
-    <!-- 
-    { 
+    <!--
+    {
     "data" : {
       "labels" : ["Enero", "Febrero", "Marzo", "Avril", "Mayo", "Junio", "Julio"],
       "datasets" : [{ "borderColor": "#0f0", "borderDash": ["5","10"] }, { "borderColor": "#0ff" } ]
@@ -605,7 +605,7 @@ window.RevealChart=window.RevealChart||{id:"RevealChart",init:function(deck){ini
 
 </script>
 
- 
+
 
 <script>
 
@@ -615,15 +615,21 @@ window.RevealChart=window.RevealChart||{id:"RevealChart",init:function(deck){ini
 
     //  debugger
 
-    // return 
-      
+    // return
+
       // if($('.slides section').length<=0) {
 
-      //   return 
+      //   return
       // }
 
-     Reveal.initialize({
-        //parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg', 
+
+
+
+
+
+
+        Reveal.initialize({
+        //parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
         parallaxBackgroundSize: '', // CSS syntax, e.g. "2100px 900px" - currently only pixels are supported (don't use % or auto)
        //autoSlide: 5000,
        // loop: true,
@@ -658,15 +664,41 @@ window.RevealChart=window.RevealChart||{id:"RevealChart",init:function(deck){ini
         plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX,RevealChalkboard,RevealChart]
     });
 
+
+
+
   }
 
   //init();
 
-  $('#btnClick').click(function(){
+
+
+
+
+    $('#btnClick').click(function(){
 
     init()
 
-  })
+
+        Reveal.on('slidechanged', function(event) {
+            // 获取当前的 PPT 页数
+            var currentPage = Reveal.getIndices().h + 1;
+
+            // 将当前页码保存到 localStorage
+            localStorage.setItem('currentPage', currentPage);
+        });
+
+        var savedPage = localStorage.getItem('currentPage');
+        if (savedPage) {
+            // 将上次保存的页码应用到 Reveal.js
+            Reveal.slide(savedPage - 1, 0, 0);
+        }
+
+
+
+
+
+    })
 
 
   setInterval(function(){
@@ -679,4 +711,4 @@ window.RevealChart=window.RevealChart||{id:"RevealChart",init:function(deck){ini
 
 </body>
 </html>
-    
+

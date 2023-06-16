@@ -3060,7 +3060,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
                 }
             }
 
-            debugger
+            //debugger
 
             SECTIONS=ss
             return ss.join("\n")
@@ -3083,7 +3083,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 
         $('#middle').click(function () {
 
-            $('#slides').attr('src', 'right.html')
+            $('#slides').attr('src', 'right.html?_=' + Math.random())
 
             var t = setTimeout(function () {
                 if ($("#slides").contents().find('.slides').length > 0) {
