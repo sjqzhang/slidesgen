@@ -1,3 +1,10 @@
+# Help
+```
+slidesgen --help 
+slidesgen tpl --help
+slidesgen gen --help
+```
+
 # Basic
 ```
 slidesgen tpl # generate a template
