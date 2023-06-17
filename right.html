@@ -677,6 +677,11 @@ window.RevealChart=window.RevealChart||{id:"RevealChart",init:function(deck){ini
 
     $('#btnClick').click(function(){
 
+        try {
+            Reveal.destroy()
+        } catch (e) {
+
+        }
     init()
 
 
