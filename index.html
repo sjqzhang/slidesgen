@@ -3106,7 +3106,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
             }
 
              $('.slides',$(document.getElementById("slides").contentWindow.document)).html(slides)
-            $('.controls,.backgrounds,.aria-status,.speaker-notes,.progress,.slide-number,.pause-overlay',$(document.getElementById("slides").contentWindow.document)).remove()
+            $('.controls,.backgrounds,.aria-status,.speaker-notes,.progress,.slide-number,.pause-overlay,#notescanvas',$(document.getElementById("slides").contentWindow.document)).remove()
             var src=document.getElementById("slides").contentWindow.document.documentElement.outerHTML;
             src = src.replace('//init();', 'init();')
             src = src.replace('id="btnClick"', '')
