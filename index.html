@@ -3035,7 +3035,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
                 if (img) {
                     //replace image url to data-background-image
                     getBase64Image(img[1])
-                    options = 'data-background-image="' + img[1] + '" data-background-opacity="0.2"'
+                    options = 'data-background-image="' + img[1] + '" data-background-opacity="0.3"'
                     //remove image from markdown
                     s = s.replace(pattern_images, '')
                 }
@@ -3083,9 +3083,14 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 
         $('#middle').click(function () {
 
-            // $('#slides').attr('src', 'right.html?_=' + Math.random())
+            // if host is localhost, use iframe to preview
+            if (location.hostname == 'localhost' || location.hostname == '127.0.0.1') {
+                $('#slides').attr('src', 'right.html?_=' + Math.random())
+            } else {
+                $('#slides').attr('src', 'right.html?_=' + Math.random())
+            }
 
-            $('#slides').attr('src', 'right.html')
+            // $('#slides').attr('src', 'right.html')
 
             var t = setTimeout(function () {
                 if ($("#slides").contents().find('.slides').length > 0) {

@@ -680,23 +680,27 @@ window.RevealChart=window.RevealChart||{id:"RevealChart",init:function(deck){ini
         try {
             Reveal.destroy()
         } catch (e) {
-
+            console.log(e)
         }
     init()
 
 
-        Reveal.on('slidechanged', function(event) {
-            // 获取当前的 PPT 页数
-            var currentPage = Reveal.getIndices().h + 1;
+        try {
+            Reveal.on('slidechanged', function (event) {
+                // 获取当前的 PPT 页数
+                var currentPage = Reveal.getIndices().h + 1;
 
-            // 将当前页码保存到 localStorage
-            localStorage.setItem('currentPage', currentPage);
-        });
+                // 将当前页码保存到 localStorage
+                localStorage.setItem('currentPage', currentPage);
+            });
 
-        var savedPage = localStorage.getItem('currentPage');
-        if (savedPage) {
-            // 将上次保存的页码应用到 Reveal.js
-            Reveal.slide(savedPage - 1, 0, 0);
+            var savedPage = localStorage.getItem('currentPage');
+            if (savedPage) {
+                // 将上次保存的页码应用到 Reveal.js
+                Reveal.slide(savedPage - 1, 0, 0);
+            }
+        }catch(e) {
+            console.log(e)
         }
 
 
