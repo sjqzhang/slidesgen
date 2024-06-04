@@ -5,6 +5,15 @@ slidesgen tpl --help
 slidesgen gen --help
 ```
 
+
+# slidesgen server(go version)
+```
+slidesgen -port 5001 -dir /path/to/images
+
+visit
+http://127.0.0.1:5001/index.html
+```
+
 # Basic
 ```
 slidesgen tpl # generate a template
