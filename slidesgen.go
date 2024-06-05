@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 )
 
 //go:embed index.html right.html slides.html img
@@ -39,6 +40,7 @@ func main() {
 		"chalk-blue.png",
 		"chalk-purple.png",
 		"chalk-yellow.png",
+		"slidesgen-help.png",
 	}
 
 	for _, fn := range fileNames {
@@ -64,6 +66,11 @@ func main() {
 		c, _ := staticFS.ReadFile("index.html")
 		w.Write(c)
 	})
+
+	if _, err := os.Stat("index.html"); os.IsNotExist(err) {
+		c, _ := staticFS.ReadFile("index.html")
+		os.WriteFile("index.html", c, 0666)
+	}
 
 	http.Handle("/", http.FileServer(http.Dir(*dir)))
 
