@@ -156,6 +156,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
     <button id="middle" style="float:right;width: 50px;overfloat:hidden;" value="xxx">View</button>
     <button id="btnSave" style="float:right;width: 50px;overfloat:hidden;" value="xxx">Export</button>
     <button id="btnHelp" style="float:right;width: 50px;overfloat:hidden;" value="xxx">Help</button>
+    <button id="btnFullScreen" style="float:right;width: 50px;overfloat:hidden;" value="xxx">Full</button>
 
 </div>
 
@@ -3143,8 +3144,13 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 
         $('#btnHelp').click(function () {
 
-             //open new window url in new tab, url is /img/slidesgen-help.png
-            window.open('/img/slidesgen-help.png')
+           $("#slides").contents().find('#btnHelp').trigger('click')
+
+        })
+
+        $('#btnFullScreen').click(function(){
+            $("#slides").contents().find('#btnFullScreen').trigger('click')
+ 
         })
 
 

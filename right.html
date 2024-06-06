@@ -503,7 +503,11 @@ div.boardhandle > ul > li {
 
 <div class="reveal">
 
-  <input type="hidden" id="btnClick">
+  <input type="hidden" id="btnHelp"/>
+
+  <input type="hidden" id="btnFullScreen"/>
+
+  <input type="hidden" id="btnClick"/>
 
     <div class="slides" style="transform:translate(0px,0px);">
 
@@ -666,6 +670,16 @@ window.RevealChart=window.RevealChart||{id:"RevealChart",init:function(deck){ini
 
 
 
+    $('#btnHelp').click(function(){
+     
+     Reveal.toggleHelp()
+   })
+
+
+   $('#btnFullScreen').click(function(){
+    
+     Reveal.triggerKey(70)
+   })
 
   }
 
@@ -680,9 +694,10 @@ window.RevealChart=window.RevealChart||{id:"RevealChart",init:function(deck){ini
         try {
             Reveal.destroy()
         } catch (e) {
-            console.log(e)
+            //console.log(e)
         }
     init()
+
 
 
         try {
@@ -709,6 +724,9 @@ window.RevealChart=window.RevealChart||{id:"RevealChart",init:function(deck){ini
 
     })
 
+
+
+    
 
   setInterval(function(){
       if ($('.print-pdf').length>0) {
