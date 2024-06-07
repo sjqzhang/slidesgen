@@ -3030,7 +3030,89 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
         var simplemde = new SimpleMDE({ element: $("#markdown")[0],showIcons: ["code", "table", "image", "link"],autosave: {enabled: true, uniqueId: "markdown"}, spellChecker: false, toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "preview", "side-by-side", "fullscreen", "guide"],}
     );
 
-    debugger;
+    // 粘贴图片的触发函数
+// 假设 simplemde 对象已存在，并绑定到某个 DOM 元素
+// 例如：<textarea id="editor"></textarea>
+
+// 添加事件监听器，监听粘贴事件
+simplemde.codemirror.on('paste', function(cm, e) {
+  // 获取剪贴板数据
+  const clipboardData = e.clipboardData || window.clipboardData;
+  const items = clipboardData.items || clipboardData.files;
+
+  // 检查是否存在图片文件
+  if (items.length === 0) {
+    return;
+  }
+
+  // 遍历剪贴板中的项目
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    // 检查是否为文件类型
+    if (item.kind === 'file') {
+      const file = item.getAsFile();
+      // 检查是否为图片文件
+      if (file.type.startsWith('image/')) {
+        // 上传图片
+        uploadImage(file, function(url) {
+          // 将图片地址插入编辑器
+          debugger
+          var content = cm.getValue();
+          var cursor = simplemde.codemirror.getCursor();
+          var line = cursor.line;
+          var lines=content.split('\n');
+          lines.splice(line+1,0,`![图片](${url})`);
+          content = lines.join("\n");
+        
+          cm.setValue(content);
+        });
+      }
+    }
+  }
+});
+
+// 上传图片的函数
+function uploadImage(file, callback) {
+  // 创建 FormData 对象
+  const formData = new FormData();
+  formData.append('file', file);
+
+  // 发起 AJAX 请求
+  $.ajax({
+    url: '/Api/upload', // 上传图片的 URL
+    type: 'POST',
+    data: formData,
+    processData: false, // 不处理数据
+    contentType: false, // 不设置内容类型
+    success: function(data) {
+ 
+        try{
+       data=eval('(' + data + ')')
+        } catch (error) {
+            console.log(error)
+            alert(data);
+        }
+      // 检查上传结果
+      if (data.state) {
+        // 获取图片 URL
+        const url = location.origin + data.data;
+        // 调用回调函数
+        callback(url);
+      } else {
+        // 处理上传失败
+        alert(data.message);
+      }
+    },
+    error: function(e) {
+      // 处理网络错误
+      console.log(e)
+      alert('上传图片失败');
+    }
+  });
+}
+
+
+   // debugger;
 
         function getBase64Image(src) {
             return new Promise(resolve => {
@@ -3167,7 +3249,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
             var t = setTimeout(function () {
                 if ($("#slides").contents().find('.slides').length > 0) {
 
-                    var val = tran($('textarea').val())
+                    var val = tran(simplemde.value())
                     $("#slides").contents().find('.slides').html(val)
                     $("#slides").contents().find('#btnClick').trigger('click')
                     clearTimeout(t)

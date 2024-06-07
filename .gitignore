@@ -5,6 +5,7 @@ slidesgen_linux_amd64
 slidesgen_windows_386
 slidesgen_windows_amd64
 
+images
 ### Created by https://www.gitignore.io
 ### Emacs ###
 # -*- mode: gitignore; -*-
