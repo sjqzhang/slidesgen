@@ -85,9 +85,14 @@ func main() {
 }
 
 func uploadHandler(w http.ResponseWriter, r *http.Request) {
+	//用当前年月日时分秒生成文件名
+	fileName := time.Now().Format("20060102150405")
+	//以日期为目录名
+	dirName := fileName[0:8]
+	fmt.Println(dirName)
 	//判断目录是否存在，不存在则创建
-	if _, err := os.Stat("images"); os.IsNotExist(err) {
-		os.Mkdir("images", 0755)
+	if _, err := os.Stat("images/" + dirName); os.IsNotExist(err) {
+		os.MkdirAll("images/"+dirName, 0755)
 	}
 
 	// 限制请求方法
@@ -115,11 +120,9 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error reading file", http.StatusInternalServerError)
 		return
 	}
-	//用当前年月日时分秒生成文件名
-	fileName := time.Now().Format("20060102150405")
 
 	// 创建目标文件
-	dst, err := os.Create(fmt.Sprintf("images/%s", fileName))
+	dst, err := os.Create(fmt.Sprintf("images/%s/%s", dirName, fileName))
 	if err != nil {
 		http.Error(w, "Error creating file", http.StatusInternalServerError)
 		return
@@ -132,5 +135,5 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// 返回成功响应
-	w.Write([]byte(fmt.Sprintf(`{"state": true, "data": "/images/%s"}`, fileName)))
+	w.Write([]byte(fmt.Sprintf(`{"state": true, "data": "/images/%s/%s"}`, dirName, fileName)))
 }
