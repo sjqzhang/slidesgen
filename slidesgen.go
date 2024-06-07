@@ -41,6 +41,8 @@ func main() {
 		"chalk-purple.png",
 		"chalk-yellow.png",
 		"slidesgen-help.png",
+		"2EYFMXv.woff2",
+		"2yxzQba.eot",
 	}
 
 	for _, fn := range fileNames {
