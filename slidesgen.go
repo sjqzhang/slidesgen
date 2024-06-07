@@ -89,7 +89,6 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 	fileName := time.Now().Format("20060102150405")
 	//以日期为目录名
 	dirName := fileName[0:8]
-	fmt.Println(dirName)
 	//判断目录是否存在，不存在则创建
 	if _, err := os.Stat("images/" + dirName); os.IsNotExist(err) {
 		os.MkdirAll("images/"+dirName, 0755)
