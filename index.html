@@ -179,7 +179,9 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 # End
       </textarea></div>
     <button id="middle" style="float:right;width: 50px;overfloat:hidden;" title="点击试试看" value="xxx">View<br>预览</button>
-    <button id="btnExample" style="float:right;width: 50px;overfloat:hidden;" value="xxx">Example</button>
+    <button id="btnSave" style="float:right;width: 50px;overfloat:hidden;" value="xxx">Save</button>
+    <button id="btnLoad" style="float:right;width: 50px;overfloat:hidden;" value="xxx">Load</button>
+    <button id="btnExample" style="float:right;width: 50px;overfloat:hidden;" value="xxx">示例</button>
     <button id="btnExport" style="float:right;width: 50px;overfloat:hidden;display:none;" value="xxx">Export</button>
     <button id="btnHelp" style="float:right;width: 50px;overfloat:hidden;display: none;" value="xxx">Help</button>
     <button id="btnFullScreen" style="float:right;width: 50px;overfloat:hidden;display: none;" value="xxx">Full</button>
@@ -3009,7 +3011,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 
             var reduceHeight = 20;
             
-            $("#middle").css("height", $(window).height() - reduceHeight - 100 + "px");
+            $("#middle").css("height", $(window).height() - reduceHeight - 300 + "px");
             $("#middle").css("width", "50px");
             // set left div height to window height by css
             $("#left").css("width", ($(window).width() / 2 - 2) + "px");
@@ -3274,12 +3276,25 @@ function uploadImage(file, callback) {
 
         })
 
+        $('#btnSave').click(function(){
+
+            localStorage.setItem('temp_markdown', simplemde.value());
+        
+        })
+
+        $('#btnLoad').click(function(){
+
+            simplemde.value( localStorage.getItem('temp_markdown'))
+
+
+        })
+
         $('#btnExample').click(function(){
 
             simplemde.value($('#exmaple').val())
         })
 
-        $('#btnSave').click(function () {
+        $('#btnExport').click(function () {
             var slides=SECTIONS.join("\n")
             debugger
             for (var key in IMAGE_MAP) {
