@@ -32,7 +32,8 @@
 <body>
 <div id="left" style="float: left; width: 45%;min-height: 500px;">
     <div class="editor-container">
-    <textarea id="markdown" style="width: 100%;height: 100%;float:left;display:none;" typ>
+        <textarea id="markdown"></textarea>
+    <textarea id="exmaple" style="width: 100%;height: 100%;float:left;display:none;" typ>
 ### shortcut（快捷键）
 ```
 F：全屏模式
@@ -46,7 +47,7 @@ S：演讲者模式
 →：上一页
 Backspace：删除画笔内容
 ```
-<!---->
+---
 <section data-background-video="https://static.slid.es/site/homepage/v1/homepage-video-editor.mp4" 
         data-background-video-loop data-background-video-muted>
 <h2>Video</h2>
@@ -73,7 +74,7 @@ block  2
 ```
 <!-- .element: class="fragment" data-autoslide="1000" -->
 
-<!---->
+---
 ```
 <section>
 Graph
@@ -96,14 +97,14 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
   </div>
 </section>
 ```
-<!---->
+---
 ## table
 <!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_01.gif"  data-background-opacity="0.1" data-background-gradient="linear-gradient(to bottom, #5efce8,#736efe)" -->
 |1|2|3|
 |--|--|--|
 |4|5|6|
 
-<!---->
+---
 
 # page1
 <!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_19.gif"  data-background-opacity="0.07" data-background-gradient="linear-gradient(to bottom, #5efce8,#736efe)" -->
@@ -113,7 +114,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 <!-- .element: class="fragment" -->
 
 
-<!---->
+---
 
 # page2
 <!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_10.gif"  data-background-opacity="0.07" data-background-gradient="linear-gradient(to bottom, #5efce8,#736efe)" -->
@@ -122,7 +123,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 ### content2
 <!-- .element: class="fragment" -->
 
-<!---->
+---
 
 # page3
 <!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_11.gif"  data-background-opacity="0.07" data-background-gradient="linear-gradient(to bottom, #5efce8,#736efe)" -->
@@ -131,7 +132,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 ### content2
 <!-- .element: class="fragment" -->
 
-<!---->
+---
 
 # page4
 <!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_12.gif"  data-background-opacity="0.07" data-background-gradient="linear-gradient(to bottom, #5efce8,#736efe)" -->
@@ -140,7 +141,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 ### content2
 <!-- .element: class="fragment" -->
 
-<!---->
+---
 
 # page5
 <!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_13.gif"  data-background-opacity="0.07" data-background-gradient="linear-gradient(to bottom, #5efce8,#736efe)" -->
@@ -149,7 +150,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 ### content2
 <!-- .element: class="fragment" -->
 
-<!---->
+---
 
 # page6
 <!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_14.gif"  data-background-opacity="0.07" data-background-gradient="linear-gradient(to bottom, #5efce8,#736efe)" -->
@@ -158,7 +159,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 ### content2
 <!-- .element: class="fragment" -->
 
-<!---->
+---
 
 # page7
 <!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_15.gif"  data-background-opacity="0.07" data-background-gradient="linear-gradient(to bottom, #5efce8,#736efe)" -->
@@ -166,7 +167,7 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 <!-- .element: class="fragment" -->
 ### content2
 <!-- .element: class="fragment" -->
-<!---->
+---
 # page8
 <!-- .slide: data-background-image="https://sjqzhang.github.io/slidesgen/assets/loop_16.gif"  data-background-opacity="0.07" data-background-gradient="linear-gradient(to bottom, #5efce8,#736efe)" -->
 ### content1
@@ -174,11 +175,12 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 ### content2
 <!-- .element: class="fragment" -->
 
-<!---->
+---
 # End
       </textarea></div>
     <button id="middle" style="float:right;width: 50px;overfloat:hidden;" title="点击试试看" value="xxx">View<br>预览</button>
-    <button id="btnSave" style="float:right;width: 50px;overfloat:hidden;" value="xxx">Export</button>
+    <button id="btnExample" style="float:right;width: 50px;overfloat:hidden;" value="xxx">Example</button>
+    <button id="btnExport" style="float:right;width: 50px;overfloat:hidden;display:none;" value="xxx">Export</button>
     <button id="btnHelp" style="float:right;width: 50px;overfloat:hidden;display: none;" value="xxx">Help</button>
     <button id="btnFullScreen" style="float:right;width: 50px;overfloat:hidden;display: none;" value="xxx">Full</button>
 
@@ -2990,10 +2992,18 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
     var IMAGE_MAP = {}
 
     var SECTIONS=[]
+    var MD_EXAMPLE=''
     $(document).ready(function () {
 
 
         // set left div height to window height by css
+
+      
+       // MD_EXMAPLE=$('#exmaple').val()
+
+       // debugger
+
+    
 
         function init() {
 
@@ -3013,10 +3023,10 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 
 
 
-            $("#markdown").css("width", ($(window).width() / 2 - 70) + "px");
-            $("#markdown").css("height", $(window).height() + "px");
+            //$("#markdown").css("width", ($(window).width() / 2 - 70) + "px");
+            //$("#markdown").css("height", $(window).height() + "px");
             // set textarea height to window height by css
-            $("textarea").css("height", $(window).height() - reduceHeight + "px");
+            //$("textarea").css("height", $(window).height() - reduceHeight + "px");
             // set right div height to window height by css
             $("#right").css("height", $(window).height() - reduceHeight + "px");
             // set iframe height to window height by css
@@ -3024,12 +3034,13 @@ My second dataset, 28, 48, 40, 19, 86, 27, 90
 
             //$('#middle').css('padding-top',$(window).height()/2+'px')
 
+          
 
         }
 
         init()
 
-        var simplemde = new SimpleMDE({ element: $("#markdown")[0],showIcons: ["code", "table", "image", "link"],autosave: {enabled: true, uniqueId: "markdown"}, spellChecker: false, toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image", "|", "preview", "side-by-side", "fullscreen", "guide"],}
+        var simplemde = new SimpleMDE({ element: $("#markdown")[0],showIcons: ["code", "table", "image", "link"],autosave: {enabled: true, uniqueId: "markdown"}, spellChecker: false, toolbar: ["bold", "italic", "heading", "|", "quote", "unordered-list", "ordered-list", "|", "link", "image","table", "|", "preview", "side-by-side", "fullscreen", "guide"],}
     );
 
     // 粘贴图片的触发函数
@@ -3240,7 +3251,7 @@ function uploadImage(file, callback) {
         })
 
         $('#middle').click(function () {
-            $('#btnFullScreen,#btnHelp').show();
+            $('#btnFullScreen,#btnHelp,#btnExport').show();
             // if host is localhost, use iframe to preview
             if (location.hostname == 'localhost' || location.hostname == '127.0.0.1') {
                 $('#slides').attr('src', 'right.html?_=' + Math.random())
@@ -3261,6 +3272,11 @@ function uploadImage(file, callback) {
             }, 500)
 
 
+        })
+
+        $('#btnExample').click(function(){
+
+            simplemde.value($('#exmaple').val())
         })
 
         $('#btnSave').click(function () {
